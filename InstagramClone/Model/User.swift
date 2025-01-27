@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseAuth
 
 struct User: Identifiable, Codable , Hashable{
     let id: String
@@ -14,6 +15,11 @@ struct User: Identifiable, Codable , Hashable{
     var fullName: String?
     var bio: String?
     let email: String
+    
+    var isCurrentUser: Bool {
+        guard let currenUid = Auth.auth().currentUser?.uid else { return false }
+        return currenUid == id
+    }
 }
 extension User {
     static var MOCK_USERS: [User] = [
