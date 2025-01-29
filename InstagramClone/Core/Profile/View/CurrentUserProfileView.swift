@@ -11,10 +11,6 @@ struct CurrentUserProfileView: View {
     let user: User
     @State private var showEditProfile: Bool = false
     
-    var posts: [Post] {
-        return Post.MOCK_POSTS.filter({$0.user?.username == user.username})
-    }
-    
     var body: some View {
         NavigationStack{
             ScrollView {
@@ -24,11 +20,7 @@ struct CurrentUserProfileView: View {
                     
                     // pic and follow
                     HStack{
-                        Image(user.profileImageUrl ?? "")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 80, height: 80)
-                            .clipShape(Circle())
+                        CircularProfileImageView(user: user, size: .large)
                         
                         Spacer()
                         
@@ -55,8 +47,6 @@ struct CurrentUserProfileView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal)
                     
-                    Text(user.username)
-                    
                     
                     // action button
                     Button {
@@ -82,7 +72,10 @@ struct CurrentUserProfileView: View {
                 
                 
                 // post grid view
-                PostGridView(posts: posts)
+                PostGridView(user: user)
+            }
+            .fullScreenCover(isPresented: $showEditProfile) {
+                EditProfileView(user: user)
             }
             .navigationTitle("Profile")
             .navigationBarTitleDisplayMode(.inline)
