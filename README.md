@@ -1,7 +1,6 @@
 # Instagram Clone - SwiftUI
 
 An Instagram-like social media application built using SwiftUI and Firebase.
----
 
 ## Features
 
